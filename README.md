@@ -43,6 +43,7 @@ daily living (ADL) while carrying a waist-mounted smartphone with embedded inert
 
  Create from the data-files, available from the folowwing site:
  http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+ 
  I    one data.frame table, of which 
  
  II   information can be obtained about:
