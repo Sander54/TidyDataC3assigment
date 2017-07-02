@@ -2,6 +2,7 @@
 create tidy data.frame after getting and cleaning
 
 In this document the following topics will be explained:
+
  1 - golbal information concerning the object/target of the data
  2 - the source / authors of the data
  3 - the variables measured 
