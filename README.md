@@ -36,7 +36,7 @@ daily living (ADL) while carrying a waist-mounted smartphone with embedded inert
 
  The experiments have been video-recorded to label the data manually. 
  The obtained dataset has been randomly partitioned into two sets:
- - 70% of the volunteers was selected for generating the training data 
+ - 70% of the volunteers was selected for generating the training data  
  - 30% for test data.
  
 		4 the target of the assingment (from Coursera)
