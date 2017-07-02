@@ -7,7 +7,7 @@ In this document the following topics will be explained:
  2 - the source / authors of the data
  3 - the variables measured 
  4 - the target of the assingment (from Coursera)
- 5 - Description of the proces/script:
+ 5 - Description of the proces/script.
  
  
     1 Object / Target (original)
