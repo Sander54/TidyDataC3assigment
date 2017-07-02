@@ -40,15 +40,15 @@
 		data.frame':    10299 obs. of  83 variables
 		
  6 Variables		
-[1]	 	 $ activity                                 : chr  "STANDING" "STANDING" "STANDING" "STANDING" ...
-[2]	 	 $ subject                                  : int  2 2 2 2 2 2 2 2 2 2 ...
-[3]	 	 $ acti-nr                                  : int  5 5 5 5 5 5 5 5 5 5 ...
-[4]	 	 $ time-body-acc-mean-x                     : num  0.257 0.286 0.275 0.27 0.275 ...
-[5]	 	 $ time-body-acc-mean-y                     : num  -0.0233 -0.0132 -0.0261 -0.0326 -0.0278 ...
-[6]	 	 $ time-body-acc-mean-z                     : num  -0.0147 -0.1191 -0.1182 -0.1175 -0.1295 ...
-[7]	 	 $ time-body-acc-std-x                      : num  -0.938 -0.975 -0.994 -0.995 -0.994 ...
-[8]	 	 $ time-body-acc-std-y                      : num  -0.92 -0.967 -0.97 -0.973 -0.967 ...
-[9]	 	 $ time-body-acc-std-z                      : num  -0.668 -0.945 -0.963 -0.967 -0.978 ...
+[1]	 $ activity                                 : chr  "STANDING" "STANDING" "STANDING" "STANDING" ...
+[2]	 $ subject                                  : int  2 2 2 2 2 2 2 2 2 2 ...
+[3]	 $ acti-nr                                  : int  5 5 5 5 5 5 5 5 5 5 ...
+[4]	 $ time-body-acc-mean-x                     : num  0.257 0.286 0.275 0.27 0.275 ...
+[5]	 $ time-body-acc-mean-y                     : num  -0.0233 -0.0132 -0.0261 -0.0326 -0.0278 ...
+[6]	 $ time-body-acc-mean-z                     : num  -0.0147 -0.1191 -0.1182 -0.1175 -0.1295 ...
+[7]	 $ time-body-acc-std-x                      : num  -0.938 -0.975 -0.994 -0.995 -0.994 ...
+[8]	 $ time-body-acc-std-y                      : num  -0.92 -0.967 -0.97 -0.973 -0.967 ...
+[9]	 $ time-body-acc-std-z                      : num  -0.668 -0.945 -0.963 -0.967 -0.978 ...
 [10]	 $ time-gravityacc-mean-x                   : num  0.936 0.927 0.93 0.929 0.927 ...
 [11]	 $ time-gravityacc-mean-y                   : num  -0.283 -0.289 -0.288 -0.293 -0.303 ...
 [12]	 $ time-gravityacc-mean-z                   : num  0.115 0.153 0.146 0.143 0.138 ...
@@ -128,17 +128,17 @@
 		step 1 load all relevant files from the website 
 		https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 		This concerns the following files:
-			(data.frames)						  (columns)  (rows)
-			subject_test.txt				dim	  2947    1
-			X_test.txt							dim	  2947  561
-			y_test.txt							dim	  2947    1
+			(data.frames)					  (columns)  (rows)
+			subject_test.txt				dim	2947    1
+			X_test.txt					dim	2947  561
+			y_test.txt					dim	2947    1
 
-			subject_train.txt				dim	  7352    1
-			X_train.txt							dim   7352  561
-			Y_train.txt							dim   7352    1
+			subject_train.txt				dim	7352    1
+			X_train.txt					dim   	7352  561
+			Y_train.txt					dim   	7352    1
 
-			features.txt						dim	  561     2
-			activity_labels.txt			dim	    6     2
+			features.txt					dim	  561   2
+			activity_labels.txt				dim	    6   2
 
 		step 2 combine the columns NAMES (from an separte-file: features.txt) with the data-value-sheet X-train
 
@@ -165,46 +165,46 @@
 		The following data.frames have been created during the transformation of the final data-frame:
 		
 				SCRIPT 1	Getting & Cleaning		
-		testtbl1	  <---	Read data.file		 <---	subject_test.txt
-		testtbl2	  <---	Read data.file		 <---	X_test.txt
-		testtbl3	  <---	Read data.file		 <---	y_test.txt
+		testtbl1	<---	Read data.file		 <---	subject_test.txt
+		testtbl2	<---	Read data.file		 <---	X_test.txt
+		testtbl3	<---	Read data.file		 <---	y_test.txt
 					
-		trainbl1	  <---	Read data.file		 <---	subject_train.txt	
-		trainbl2	  <---	Read data.file		 <---	X_train.txt
-		trainbl3	  <---	Read data.file		 <---	Y_train.txt
+		trainbl1	<---	Read data.file		 <---	subject_train.txt	
+		trainbl2	<---	Read data.file		 <---	X_train.txt
+		trainbl3	<---	Read data.file		 <---	Y_train.txt
 					
-		featureNames <---	Read data.file	   <---	features.txt
-		x	 		      <---	Read data.file		 <---	activity_labels.txt
+		featureNames 	<---	Read data.file	   	 <---	features.txt
+		x	 	<---	Read data.file		 <---	activity_labels.txt
 
 		
-		transLbl	  -->		Matrix of lables.names of all Features					        (step 2)
-		combi_TT	  -->		Combination of relevant data.frame (Test&Training)		  (step 3)
-		combiSDM3	  -->		List columns numbers from [combi_TT] inwhich Mean or Std(step 4)
-		combiSDM3b  -->		Data.frame with only colums concerning Mean and Std		  (step 4)
-		y_test2		  -->		(= [testtbl3] = y_test.txt) + new column act.names		  (step 5)
-		y_train2 	  --> 	(= [trainbl3] = y_train.txt) + new column act.names	    (step 5)
-		listActNames--> 	Combined list of [y_test2] + [y_tran2]					        (step 5)
-		combiName1  -->		[combiSDM3b] + new column act.names						          (step 5)
-		combiRename -->		[combiName1] + new label names for columns 1+2+3		    (step 6)
-		vector2		  -->		Vector: length=all obeservations, content "training"	  (step 7)
-		vector2a	  -->		Vector: length=all test-obeserv., content "testing"		  (step 7)
-		combiV1$TT	--> 	[combiRename] + new column [TT] = [vector2(a)]			    (step 7)
-		lblNames	  -->		names of data.frame [combiV1]							              (step 8)
-		Rename1234	-->		names/labels [lblNames] adjusted (descriptive)			    (step 8)
-		lownames	  -->		[Rename4] Upper letters changed in lower				        (step 8)
+		transLbl	-->		Matrix of lables.names of all Features				(step 2)
+		combi_TT	-->		Combination of relevant data.frame (Test&Training)		(step 3)
+		combiSDM3	-->		List columns numbers from [combi_TT] inwhich Mean or Std	(step 4)
+		combiSDM3b  	-->		Data.frame with only colums concerning Mean and Std		(step 4)
+		y_test2		-->		(= [testtbl3] = y_test.txt) + new column act.names		(step 5)
+		y_train2 	--> 		(= [trainbl3] = y_train.txt) + new column act.names	    	(step 5)
+		listActNames	--> 		Combined list of [y_test2] + [y_tran2]				(step 5)
+		combiName1  	-->		[combiSDM3b] + new column act.names						          (step 5)
+		combiRename 	-->		[combiName1] + new label names for columns 1+2+3		(step 6)
+		vector2		-->		Vector: length=all obeservations, content "training"	  	(step 7)
+		vector2a	-->		Vector: length=all test-obeserv., content "testing"		(step 7)
+		combiV1$TT	--> 		[combiRename] + new column [TT] = [vector2(a)]			(step 7)
+		lblNames	-->		names of data.frame [combiV1]							              (step 8)
+		Rename1234	-->		names/labels [lblNames] adjusted (descriptive)			(step 8)
+		lownames	-->		[Rename4] Upper letters changed in lower			(step 8)
 		NewLabels 	-->		Vector of [lownames]									                  (step 8)
-		combiV2		  -->		[combiV1] adjusted with descriptive labels				      (step 8)
+		combiV2		-->		[combiV1] adjusted with descriptive labels			(step 8)
 		
 				SCRIPT 2	create tidy data
-		tidv1		    -->		[combiV2] data.frame for adjusting to tidy-data.frame	  (step 9)
-		labellist	  -->		list of names of [tidv1]								                (step 9)
-		vectormean	-->		vector of all column nubers cointaing mean-values		    (step 9)
-		vect 		    -->		adding other relevant column-numbers 					          (step 9)
-		tidv1b		  -->		[tidv1] containing only relevant (mean) values			    (step 9)
-		NewLabels	  -->		list of alle relevant label-names of [tidv1b](for MELT)	(step 10)
-		tidv2		    -->		[tidv1b] inwhich all columuns with values mean are melt (step 10)
-							        in 1 clomun with labels and 1 column with the values
-		tidtbl		  -->		[tidv2] transformed in a table							            (step 11)
-		tidtblgrp1 	--> 	group_by(tidv2, activity)  								              (step 11)
+		tidv1		-->		[combiV2] data.frame for adjusting to tidy-data.frame	  	(step 9)
+		labellist	-->		list of names of [tidv1]								                (step 9)
+		vectormean	-->		vector of all column nubers cointaing mean-values		(step 9)
+		vect 		-->		adding other relevant column-numbers 				(step 9)
+		tidv1b		-->		[tidv1] containing only relevant (mean) values			(step 9)
+		NewLabels	-->		list of alle relevant label-names of [tidv1b](for MELT)		(step 10)
+		tidv2		-->		[tidv1b] inwhich all columuns with values mean are melt 	(step 10)
+							 in 1 clomun with labels and 1 column with the values
+		tidtbl		-->		[tidv2] transformed in a table							            (step 11)
+		tidtblgrp1 	--> 		group_by(tidv2, activity)  								              (step 11)
 		tidtblgrp2 	-->	 	group_by(tidv2, subject)								                (step 11)
 		tidtblgrp3 	-->		group_by(tidv2, variable)								                (step 11)
