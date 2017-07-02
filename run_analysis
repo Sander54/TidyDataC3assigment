@@ -1,0 +1,181 @@
+  # Create 1 data.frame
+      # load / read the relevant DATA
+testtbl1 <- read.table("./R assignment C3W4/UCI HAR Dataset/test/subject_test.txt", sep = "")
+testtbl2 <- read.table("./R assignment C3W4/UCI HAR Dataset/test/X_test.txt", sep = "")
+testtbl3 <- read.table("./R assignment C3W4/UCI HAR Dataset/test/y_test.txt", sep = "")
+
+trainbl1 <- read.table("./R assignment C3W4/UCI HAR Dataset/train/subject_train.txt", sep = "")
+trainbl2 <- read.table("./R assignment C3W4/UCI HAR Dataset/train/X_train.txt", sep = "")
+trainbl3 <- read.table("./R assignment C3W4/UCI HAR Dataset/train/y_train.txt", sep = "")
+
+      # combine the columns NAMES (from an separte-file: features.txt) with the data-value-sheet X-train
+featureNames <- read.table("./R assignment C3W4/UCI HAR Dataset/features.txt", sep = "")
+    str(featureNames)
+transLbl <- matrix(featureNames[,2], nrow = 1, ncol = 561)         # turn rows in columns
+
+names(trainbl2) <- c(transLbl)	                                   # turn all the values in Names	
+    head(trainbl2)
+    str(trainbl2)
+    
+      # Combine the all relevant d.frames to 1 data.frame 
+comb_test <- cbind(subject_test,y_test,X_test)                    
+comb_train <- cbind(subject_train,y_train,X_train)
+combi_TT <- rbind(comb_test,comb_train)
+    str(combi_TT)
+    dim(combi_TT)
+    
+# wich columns have relevant information (SD and Mean)?
+combiSDM3 <- grep("*V1|mean|std*",names(combi_TT))
+
+combiSDM3b <- (combi_TT[,c(combiSDM3)])
+
+
+# create a data.frame of data.frame created in the steps 1 - 4 of the assignment
+tidv1 <- (combiV2)
+dim(tidv1)
+
+# select the columns with the value "mean"
+labellist <- names(tidv1)
+vectormean <- c(grep("mean",labellist))
+print(vectormean)
+
+vect <-c(1, 2, 3, c(vectormean)) # add to the vector the columns 1, 2 + 3
+
+tidv1b <- (tidv1[,vect])         # select only the relevant columns via "vect"
+dim(tidv1b)
+str(tidv1b)
+names(tidv1b)
+
+# Create a tidy-table (MELT) library(reshape2)
+library(reshape2)
+# first create a list of all the names
+NewLabels <- names(tidv1b)     
+# use the function MELT to create 1 variable, for all the different measure-calculations
+# (these values are in the columns 4 --> 49) 
+# The first 3 columns should remain un-changed
+tidv2 <- melt(tidv1b, id=c("activity","subject","acti-nr"), measure.vars=c(NewLabels[4:49]), value.name = "mean")
+dim(tidv2)
+class(tidv2)
+names(tidv2)
+
+
+
+
+# to ease the ability for requesting information from the data, I change de data.frame in a Table
+library(dplyr)
+tidtbl <- tbl_df(tidv2)		
+class(tidtbl)
+
+# then I have created 3 goup variables
+tidtblgrp1 <- group_by(tidv2, activity)  
+tidtblgrp2 <- group_by(tidv2, subject)
+tidtblgrp3 <- group_by(tidv2, variable)
+summarize(tidtblgrp1, mean(mean))
+summarize(tidtblgrp2, mean(mean))
+summarize(tidtblgrp3, mean(mean))	
+    str(combiSDM3b)
+    dim(combiSDM3b)
+    
+# adding row label-names (via file "activity_labels.txt" )
+x <- read.table("./R assignment C3W4/UCI HAR Dataset/activity_labels.txt", sep = "")
+y_test2 <- testtbl3
+y_test2[1] <- lapply(y_test2[1],function(x){(gsub("1", "WALKING",x))})									
+y_test2[1] <- lapply(y_test2[1],function(x){(gsub("2", "WALKING_UPSTAIRS",x))})									
+y_test2[1] <- lapply(y_test2[1],function(x){(gsub("3", "WALKING_DOWNSTAIRS",x))})									
+y_test2[1] <- lapply(y_test2[1],function(x){(gsub("4", "SITTING",x))})									
+y_test2[1] <- lapply(y_test2[1],function(x){(gsub("5", "STANDING",x))})									
+y_test2[1] <- lapply(y_test2[1],function(x){(gsub("6", "LAYING",x))})									
+    str(y_test2)
+    dim(y_test2)
+y_train2 <- trainbl3
+y_train2[1] <- lapply(y_train2[1],function(x){(gsub("1", "WALKING",x))})									
+y_train2[1] <- lapply(y_train2[1],function(x){(gsub("2", "WALKING_UPSTAIRS",x))})									
+y_train2[1] <- lapply(y_train2[1],function(x){(gsub("3", "WALKING_DOWNSTAIRS",x))})									
+y_train2[1] <- lapply(y_train2[1],function(x){(gsub("4", "SITTING",x))})									
+y_train2[1] <- lapply(y_train2[1],function(x){(gsub("5", "STANDING",x))})									
+y_train2[1] <- lapply(y_train2[1],function(x){(gsub("6", "LAYING",x))})									
+    str(y_train2)
+    dim(y_train2)    
+listActNames <- rbind(y_test2, y_train2)
+    str(listActNames)
+    dim(listActNames)
+combiName1 <- cbind(listActNames,combiSDM3b)
+    str(combiName1)
+    dim(combiName1)
+    
+# rename the first 3 columns
+combiRename <- (combiName1)
+names(combiRename)[1]  <- paste("ACTIVITY")
+names(combiRename)[2]  <- paste("SUBJECT")
+names(combiRename)[3]  <- paste("ACTI-NR")
+head(combiRename)
+
+# create a variable indicating tets- or train obeservations
+vector2	<-	rep_len("Training",10299)	
+vector2a <-	rep_len("Testing",2947)	
+combiV1	<-	combiRename
+combiV1$TT <- vector2
+combiV1$TT[1:2947] <- vector2a
+    str(combiV1)
+    dim(combiV1)
+
+# create descriptieve value names
+lblNames <- names(combiV1)
+Rename1 <- (gsub("^t","time-", lblNames))
+Rename2 <- (gsub("^f","frequentie-", Rename1))
+Rename3 <- (gsub("Body","body-", Rename2))
+Rename4 <- (gsub("()","", Rename3, fixed=TRUE))
+lownames <- tolower(Rename4)
+
+combiV2 <- combiV1	
+NewLabels <- c(lownames)	
+names(combiV2) <- c(NewLabels)	
+    dim(combiV2)	
+    str(combiV2)
+View(combiV2)
+
+## create tidy data
+
+# create a data.frame of data.frame created in the steps 1 - 4 of the assignment
+tidv1 <- (combiV2)
+dim(tidv1)
+
+# select the columns with the value "mean"
+labellist <- names(tidv1)
+vectormean <- c(grep("mean",labellist))
+print(vectormean)
+
+vect <-c(1, 2, 3, c(vectormean)) # add to the vector the columns 1, 2 + 3
+
+tidv1b <- (tidv1[,vect])         # select only the relevant columns via "vect"
+dim(tidv1b)
+str(tidv1b)
+names(tidv1b)
+
+# Create a tidy-table (MELT) library(reshape2)
+library(reshape2)
+# first create a list of all the names
+NewLabels <- names(tidv1b)     
+# use the function MELT to create 1 variable, for all the different measure-calculations
+# (these values are in the columns 4 --> 49) 
+# The first 3 columns should remain un-changed
+tidv2 <- melt(tidv1b, id=c("activity","subject","acti-nr"), measure.vars=c(NewLabels[4:49]), value.name = "mean")
+dim(tidv2)
+class(tidv2)
+names(tidv2)
+
+
+
+
+# to ease the ability for requesting information from the data, I change de data.frame in a Table
+library(dplyr)
+tidtbl <- tbl_df(tidv2)		
+class(tidtbl)
+
+# then I have created 3 goup variables
+tidtblgrp1 <- group_by(tidv2, activity)  
+tidtblgrp2 <- group_by(tidv2, subject)
+tidtblgrp3 <- group_by(tidv2, variable)
+summarize(tidtblgrp1, mean(mean))
+summarize(tidtblgrp2, mean(mean))
+summarize(tidtblgrp3, mean(mean))	
