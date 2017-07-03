@@ -29,52 +29,6 @@ combiSDM3 <- grep("*V1|mean|std*",names(combi_TT))
 
 combiSDM3b <- (combi_TT[,c(combiSDM3)])
 
-
-# create a data.frame of data.frame created in the steps 1 - 4 of the assignment
-tidv1 <- (combiV2)
-dim(tidv1)
-
-# select the columns with the value "mean"
-labellist <- names(tidv1)
-vectormean <- c(grep("mean",labellist))
-print(vectormean)
-
-vect <-c(1, 2, 3, c(vectormean)) # add to the vector the columns 1, 2 + 3
-
-tidv1b <- (tidv1[,vect])         # select only the relevant columns via "vect"
-dim(tidv1b)
-str(tidv1b)
-names(tidv1b)
-
-# Create a tidy-table (MELT) library(reshape2)
-library(reshape2)
-# first create a list of all the names
-NewLabels <- names(tidv1b)     
-# use the function MELT to create 1 variable, for all the different measure-calculations
-# (these values are in the columns 4 --> 49) 
-# The first 3 columns should remain un-changed
-tidv2 <- melt(tidv1b, id=c("activity","subject","acti-nr"), measure.vars=c(NewLabels[4:49]), value.name = "mean")
-dim(tidv2)
-class(tidv2)
-names(tidv2)
-
-
-
-
-# to ease the ability for requesting information from the data, I change de data.frame in a Table
-library(dplyr)
-tidtbl <- tbl_df(tidv2)		
-class(tidtbl)
-
-# then I have created 3 goup variables
-tidtblgrp1 <- group_by(tidv2, activity)  
-tidtblgrp2 <- group_by(tidv2, subject)
-tidtblgrp3 <- group_by(tidv2, variable)
-summarize(tidtblgrp1, mean(mean))
-summarize(tidtblgrp2, mean(mean))
-summarize(tidtblgrp3, mean(mean))	
-    str(combiSDM3b)
-    dim(combiSDM3b)
     
 # adding row label-names (via file "activity_labels.txt" )
 x <- read.table("./R assignment C3W4/UCI HAR Dataset/activity_labels.txt", sep = "")
